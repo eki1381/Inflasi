@@ -15,7 +15,7 @@ public class Merek {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private String merekId;
+    private int merekId;
 
     @NonNull
     private String merekName;
@@ -24,16 +24,16 @@ public class Merek {
     private String satuan;
 
     @NonNull
-    private String itemId;
+    private int itemId;
 
-    public Merek(@NonNull String merekName,@NonNull String satuan, @NonNull String itemId) {
+    public Merek(@NonNull String merekName,@NonNull String satuan, @NonNull int itemId) {
         this.merekName = merekName;
         this.satuan = satuan;
         this.itemId = itemId;
     }
 
     @NonNull
-    public String getMerekId() {
+    public int getMerekId() {
         return merekId;
     }
 
@@ -48,7 +48,7 @@ public class Merek {
     }
 
     @NonNull
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 }

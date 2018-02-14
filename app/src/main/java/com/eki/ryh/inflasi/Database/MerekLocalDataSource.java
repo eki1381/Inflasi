@@ -71,7 +71,7 @@ public class MerekLocalDataSource implements MerekDataSource {
     }
 
     @Override
-    public void getMerekByBarangId(final String itemId, @NonNull final LoadMerekCallback callback) {
+    public void getMerekByBarangId(final int itemId, @NonNull final LoadMerekCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

@@ -14,7 +14,7 @@ public class Barang {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private String itemId;
+    private int itemId;
 
     @NonNull
     private String itemName;
@@ -24,7 +24,7 @@ public class Barang {
     }
 
     @NonNull
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 

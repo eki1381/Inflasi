@@ -19,7 +19,7 @@ public interface MerekDao {
     void insertMerek(Merek merek);
 
     @Query("SELECT * FROM Merek WHERE itemId = :itemId")
-    List<Merek> getMerekByBarangId(String itemId);
+    List<Merek> getMerekByBarangId(int itemId);
 
     @Query("SELECT * FROM Merek")
     List<Merek> getAllMerek();

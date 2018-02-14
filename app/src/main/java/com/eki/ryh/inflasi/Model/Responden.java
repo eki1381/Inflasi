@@ -13,7 +13,7 @@ public final class Responden {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private String respId;
+    private int respId;
 
     @NonNull
     private String respName;
@@ -23,7 +23,7 @@ public final class Responden {
     }
 
     @NonNull
-    public String getRespId() {
+    public int getRespId() {
         return respId;
     }
 

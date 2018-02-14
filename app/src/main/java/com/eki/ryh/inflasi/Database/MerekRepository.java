@@ -67,7 +67,7 @@ public class MerekRepository implements MerekDataSource {
     }
 
     @Override
-    public void getMerekByBarangId(String itemId, @NonNull final LoadMerekCallback callback) {
+    public void getMerekByBarangId(int itemId, @NonNull final LoadMerekCallback callback) {
         checkNotNull(callback);
         mMerekLocalDataSource.getMerekByBarangId(itemId, new LoadMerekCallback() {
             @Override

@@ -29,5 +29,5 @@ public interface MerekDataSource {
 
     void getAllMerek(@NonNull LoadAllMerekCallback callback);
 
-    void getMerekByBarangId(String itemId, @NonNull LoadMerekCallback callback);
+    void getMerekByBarangId(int itemId, @NonNull LoadMerekCallback callback);
 }
