@@ -2,11 +2,9 @@ package com.eki.ryh.inflasi.Database;
 
 import android.support.annotation.NonNull;
 
-import com.eki.ryh.inflasi.Model.Merek;
 import com.eki.ryh.inflasi.Model.Responden;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,5 +49,11 @@ public class RespondenRepository implements RespondenDataSource {
     @Override
     public void getRespondenByNamaResponden(String namaResponden, @NonNull LoadRespondenByNamaRespondenCallback callback) {
 
+    }
+
+    @Override
+    public void saveResponden(Responden responden) {
+        checkNotNull(responden);
+        mRespondenLocalDataSource.saveResponden(responden);
     }
 }

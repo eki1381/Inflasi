@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.eki.ryh.inflasi.Base.BaseActivity;
+import com.eki.ryh.inflasi.Injection;
 import com.eki.ryh.inflasi.R;
 
 //todo create BaseActivity and import to this class
@@ -25,7 +26,7 @@ public class AddRespondenActivity extends BaseActivity implements AddRespondenFr
             transaction.add(R.id.frame_layout_content, AddRespondenFragment);
             transaction.commit();
         }
-        mPresenter = new AddRespondenPresenter(this, AddRespondenFragment);
+        mPresenter = new AddRespondenPresenter(this, AddRespondenFragment, Injection.provideRespondenRepository(this));
     }
 
     @Override

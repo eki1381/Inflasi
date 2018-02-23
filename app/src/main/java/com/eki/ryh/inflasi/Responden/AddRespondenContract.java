@@ -10,6 +10,6 @@ public interface AddRespondenContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void saveResponden(String id, String respondenName);
+        void saveResponden(String respondenName);
     }
 }

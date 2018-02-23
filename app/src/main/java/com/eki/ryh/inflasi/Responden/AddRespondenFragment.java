@@ -16,7 +16,7 @@ public final class AddRespondenFragment extends BaseFragment implements AddRespo
 
     private AddRespondenContract.Presenter mPresenter;
 
-    private EditText respondenId, respondenName;
+    private EditText respondenName;
 
     private Button entriBtn;
 
@@ -38,14 +38,13 @@ public final class AddRespondenFragment extends BaseFragment implements AddRespo
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_responden_layout, container, false);
 
-        respondenId = view.findViewById(R.id.id_responden);
         respondenName = view.findViewById(R.id.nama_responden);
 
         entriBtn = view.findViewById(R.id.entri_btn);
         entriBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.saveResponden(respondenId.getText().toString(), respondenName.getText().toString());
+                mPresenter.saveResponden(respondenName.getText().toString());
             }
         });
 

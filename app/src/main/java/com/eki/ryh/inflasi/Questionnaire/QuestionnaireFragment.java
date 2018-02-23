@@ -1,31 +1,47 @@
 package com.eki.ryh.inflasi.Questionnaire;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.eki.ryh.inflasi.Base.BaseFragment;
+import com.eki.ryh.inflasi.InnerMain.InnerMainRv;
 import com.eki.ryh.inflasi.Model.Barang;
 import com.eki.ryh.inflasi.Model.Merek;
+import com.eki.ryh.inflasi.Model.Questionnaire;
+import com.eki.ryh.inflasi.Model.Responden;
 import com.eki.ryh.inflasi.R;
+import com.farbod.labelledspinner.LabelledSpinner;
+import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View {
+public final class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View, CalendarDatePickerDialogFragment.OnDateSetListener {
 
     private QuestionnaireContract.Presenter mPresenter;
 
-    private Spinner barangSpinner, merekSpinner;
+    private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
 
-    private TextView satuanLabel;
+    private LabelledSpinner respondenSpinner;
+
+    private TextView barangLabel, merekLabel, bulanLabel, satuanLabel;
+
+    private EditText hargaFld;
+
+    private MaterialFancyButton entriBtn;
+
+    private String responden;
+
+    private int spinnerPos;
 
     // Your presenter is available using the mPresenter variable
     public QuestionnaireFragment() {
@@ -45,55 +61,130 @@ public final class QuestionnaireFragment extends BaseFragment implements Questio
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questionnaire_layout, container, false);
 
-        barangSpinner = view.findViewById(R.id.jenis_barang);
-        barangSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        barangLabel = view.findViewById(R.id.barang_label);
+
+        merekLabel = view.findViewById(R.id.merek_label);
+
+        respondenSpinner = view.findViewById(R.id.responden_spinner);
+        respondenSpinner.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mPresenter.populateMerek(adapterView.getSelectedItem().toString());
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                responden = adapterView.getItemAtPosition(position).toString();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
 
             }
         });
 
-        merekSpinner = view.findViewById(R.id.kualitas_merek);
+        barangLabel = view.findViewById(R.id.barang_label);
 
-        satuanLabel = view.findViewById(R.id.satuan);
+        merekLabel = view.findViewById(R.id.merek_label);
+
+        bulanLabel = view.findViewById(R.id.bulan_label);
+
+        satuanLabel = view.findViewById(R.id.satuan_label);
+
+        hargaFld = view.findViewById(R.id.harga);
+
+        entriBtn = view.findViewById(R.id.entri_btn);
+        entriBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.updateQuestionnaire(responden, Integer.parseInt(hargaFld.getText().toString()));
+            }
+        });
 
         return view;
     }
 
     @Override
-    public void populateBarang(List<Barang> barangs) {
-        List<String> namaBarang = new ArrayList<>();
-        for(int i = 0;i < barangs.size();i++){
-            namaBarang.add(barangs.get(i).getItemName());
+    public void populateResponden(List<Responden> respondens) {
+        List<String> namaResponden = new ArrayList<>();
+        for (int i = 0; i < respondens.size(); i++) {
+            namaResponden.add(respondens.get(i).getRespName());
         }
 
-        ArrayAdapter<String> barangAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, namaBarang);
+        ArrayAdapter<String> respondenAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, namaResponden);
 
-        barangAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        barangSpinner.setAdapter(barangAdapter);
-    }
-
-    @Override
-    public void populateMerek(List<Merek> mereks) {
-        List<String> namaMerek = new ArrayList<>();
-        for(int i = 0;i < mereks.size();i++){
-            namaMerek.add(mereks.get(i).getMerekName());
-        }
-
-        ArrayAdapter<String> merekAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, namaMerek);
-
-        merekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        merekSpinner.setAdapter(merekAdapter);
+        respondenAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        respondenSpinner.setCustomAdapter(respondenAdapter);
+        respondenSpinner.setSelection(spinnerPos);
     }
 
     @Override
     public void setSatuan(String satuan) {
         satuanLabel.setText(satuan);
+    }
+
+    @Override
+    public void loadQuestionnaire(Questionnaire questionnaire) {
+        barangLabel.setText(questionnaire.getNamaBarang());
+        merekLabel.setText(questionnaire.getNamaMerek());
+        spinnerPos = respondenToPosition(questionnaire.getNamaResponden());
+        bulanLabel.setText(questionnaire.getBulan());
+        satuanLabel.setText(questionnaire.getSatuan());
+        hargaFld.setText(String.valueOf(questionnaire.getHarga()));
+    }
+
+    private int respondenToPosition(String responden){
+        if (responden.equals("Siantan Mart")){
+            return 0;
+        }else if(responden.equals("Kedai Cece")){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    @Override
+    public void successNotification(){
+        Toast.makeText(getActivity(), "Entri data sukses", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
+    }
+
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        String bulan = "-";
+        if (monthOfYear == 0) {
+            bulan = "Januari";
+        }
+        if (monthOfYear == 1) {
+            bulan = "Februari";
+        }
+        if (monthOfYear == 2) {
+            bulan = "Maret";
+        }
+        if (monthOfYear == 3) {
+            bulan = "April";
+        }
+        if (monthOfYear == 4) {
+            bulan = "Mei";
+        }
+        if (monthOfYear == 5) {
+            bulan = "Juni";
+        }
+        if (monthOfYear == 6) {
+            bulan = "Juli";
+        }
+        if (monthOfYear == 7) {
+            bulan = "Agustus";
+        }
+        if (monthOfYear == 8) {
+            bulan = "September";
+        }
+        if (monthOfYear == 9) {
+            bulan = "Oktober";
+        }
+        if (monthOfYear == 10) {
+            bulan = "November";
+        }
+        if (monthOfYear == 11) {
+            bulan = "Desember";
+        }
+
+        bulanLabel.setText(bulan);
     }
 
     /**

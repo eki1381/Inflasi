@@ -24,6 +24,11 @@ public class Barang {
     }
 
     @NonNull
+    public void setItemId(@NonNull int itemId) {
+        this.itemId = itemId;
+    }
+
+    @NonNull
     public int getItemId() {
         return itemId;
     }

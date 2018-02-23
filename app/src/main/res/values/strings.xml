@@ -5,13 +5,17 @@
     <string name="menu3">Ekspor</string>
     <string name="menu4">Tambah Barang</string>
     <string name="menu5">Tambah Merek</string>
-    <string name="text1">Jenis Barang :</string>
-    <string name="text2">Kualitas/Merek :</string>
-    <string name="text3">Satuan :</string>
-    <string name="text4">Responden :</string>
-    <string name="text5">Harga :</string>
+    <string name="text1">Barang   :</string>
+    <string name="text2">Merek    :</string>
+    <string name="text3">Satuan   :</string>
+    <string name="text4">Responden</string>
+    <string name="text5">Harga    :</string>
     <string name="text6">ID</string>
+    <string name="text7">Bulan    :</string>
     <string name="test">test</string>
     <string name="btn_entri">Entri</string>
     <string name="menu6">TAMBAH RESPONDEN</string>
+    <string name="btn_date">Pilih Bulan</string>
+    <string name="init_bulan">Januari</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

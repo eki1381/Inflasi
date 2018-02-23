@@ -22,10 +22,6 @@ public class MerekRepository implements MerekDataSource {
 
     private final MerekDataSource mMerekLocalDataSource;
 
-    Map<String, Merek> mCachedMerek;
-
-    boolean mCacheIsDirty = false;
-
     private MerekRepository(@NonNull MerekDataSource merekLocalDataSource) {
         mMerekLocalDataSource = checkNotNull(merekLocalDataSource);
     }
@@ -41,12 +37,6 @@ public class MerekRepository implements MerekDataSource {
     public void saveMerek(Merek merek) {
         checkNotNull(merek);
         mMerekLocalDataSource.saveMerek(merek);
-
-        // Do in memory cache update to keep the app UI up to date
-        if (mCachedMerek == null) {
-            mCachedMerek = new LinkedHashMap<>();
-        }
-        mCachedMerek.put(merek.getItemId(), merek);
     }
 
     @Override
@@ -55,7 +45,6 @@ public class MerekRepository implements MerekDataSource {
         mMerekLocalDataSource.getAllMerek(new LoadAllMerekCallback() {
             @Override
             public void onAllMerekLoaded(List<Merek> mereks) {
-                refreshCache(mereks);
                 callback.onAllMerekLoaded(mereks);
             }
 
@@ -72,7 +61,6 @@ public class MerekRepository implements MerekDataSource {
         mMerekLocalDataSource.getMerekByBarangId(itemId, new LoadMerekCallback() {
             @Override
             public void onMerekLoaded(List<Merek> mereks) {
-                refreshCache(mereks);
                 callback.onMerekLoaded(mereks);
             }
 
@@ -81,16 +69,5 @@ public class MerekRepository implements MerekDataSource {
 
             }
         });
-    }
-
-    private void refreshCache(List<Merek> mereks) {
-        if (mCachedMerek == null) {
-            mCachedMerek = new LinkedHashMap<>();
-        }
-        mCachedMerek.clear();
-        for (Merek merek : mereks) {
-            mCachedMerek.put(merek.getItemId(), merek);
-        }
-        mCacheIsDirty = false;
     }
 }

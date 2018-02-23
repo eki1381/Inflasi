@@ -22,7 +22,7 @@ public final class AddMerekFragment extends BaseFragment implements AddMerekCont
 
     private AddMerekContract.Presenter mPresenter;
 
-    private EditText merekIdFld, merekNameFld, merekSatuanFld;
+    private EditText merekNameFld, merekSatuanFld;
 
     private Spinner barangSpinner;
 
@@ -46,7 +46,6 @@ public final class AddMerekFragment extends BaseFragment implements AddMerekCont
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_merek_layout, container, false);
 
-        merekIdFld = view.findViewById(R.id.id_merek);
         merekNameFld = view.findViewById(R.id.nama_merek);
         merekSatuanFld = view.findViewById(R.id.satuan);
 

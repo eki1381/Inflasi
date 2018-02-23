@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.eki.ryh.inflasi"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,16 +16,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support:cardview-v7:27.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:design:27.0.2'
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.0"
     // alternatively, just ViewModel
@@ -49,4 +56,24 @@ dependencies {
     testImplementation "android.arch.persistence.room:testing:1.0.0"
 
     compile 'com.google.guava:guava:24.0-android'
+
+    compile 'com.code-troopers.betterpickers:library:3.1.0'
+
+    compile 'com.ramotion.circlemenu:circle-menu:0.3.1'
+
+    compile 'com.github.florent37:awesomebar:1.0.3'
+
+    compile 'com.farbod.labelledspinner:labelledspinner:1.1.5'
+
+    compile 'com.rilixtech:materialfancybuttons:1.8.7'
+
+    compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'
+
+    implementation 'com.github.humazed:RoomAsset:v1.0'
+
+    compile 'com.github.vivchar:RendererRecyclerViewAdapter:2.5.0'
+
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+
+    compile 'com.google.code.gson:gson:2.8.2'
 }

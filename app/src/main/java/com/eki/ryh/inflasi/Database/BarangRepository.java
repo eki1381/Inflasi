@@ -21,10 +21,6 @@ public class BarangRepository implements BarangDataSource {
 
     private final BarangDataSource mBarangLocalDataSource;
 
-    Map<String, Barang> mCachedBarang;
-
-    boolean mCacheIsDirty = false;
-
     private BarangRepository(@NonNull BarangDataSource barangLocalDataSource) {
         mBarangLocalDataSource = checkNotNull(barangLocalDataSource);
     }
@@ -42,7 +38,6 @@ public class BarangRepository implements BarangDataSource {
         mBarangLocalDataSource.getAllBarang(new LoadBarangCallback() {
             @Override
             public void onBarangLoaded(List<Barang> barang) {
-                refreshCache(barang);
                 callback.onBarangLoaded(barang);
             }
 
@@ -59,7 +54,6 @@ public class BarangRepository implements BarangDataSource {
         mBarangLocalDataSource.getItemByItemName(itemName, new LoadBarangIdByNamaBarang() {
             @Override
             public void onBarangIdLoaded(List<Barang> barang) {
-                refreshCache(barang);
                 callback.onBarangIdLoaded(barang);
             }
 
@@ -74,22 +68,5 @@ public class BarangRepository implements BarangDataSource {
     public void saveBarang(Barang brg) {
         checkNotNull(brg);
         mBarangLocalDataSource.saveBarang(brg);
-
-        // Do in memory cache update to keep the app UI up to date
-        if (mCachedBarang == null) {
-            mCachedBarang = new LinkedHashMap<>();
-        }
-        mCachedBarang.put(brg.getItemId(), brg);
-    }
-
-    private void refreshCache(List<Barang> barangs) {
-        if (mCachedBarang == null) {
-            mCachedBarang = new LinkedHashMap<>();
-        }
-        mCachedBarang.clear();
-        for (Barang barang : barangs) {
-            mCachedBarang.put(barang.getItemId(), barang);
-        }
-        mCacheIsDirty = false;
     }
 }

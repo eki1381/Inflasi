@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eki.ryh.inflasi">
 
@@ -8,19 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.eki.ryh.inflasi.Main.MainActivity">
+        <activity android:name=".Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.eki.ryh.inflasi.Questionnaire.QuestionnaireActivity"></activity>
-
-        <activity android:name="com.eki.ryh.inflasi.Barang.AddBarangActivity"></activity>
-
-        <activity android:name="com.eki.ryh.inflasi.Merek.AddMerekActivity"></activity>
+        <activity
+            android:name=".Questionnaire.QuestionnaireActivity"
+            android:parentActivityName=".Main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eki.ryh.inflasi.Main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".InnerMain.InnerMainActivity"
+            android:parentActivityName=".Main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.eki.ryh.inflasi.Main.MainActivity" />
+        </activity>
+        <activity android:name=".Barang.AddBarangActivity" />
+        <activity android:name=".Merek.AddMerekActivity" />
+        <activity android:name=".Responden.AddRespondenActivity" />
 
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 </manifest>

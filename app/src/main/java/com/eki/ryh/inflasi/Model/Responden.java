@@ -22,6 +22,10 @@ public final class Responden {
         this.respName = respName;
     }
 
+    public void setRespId(@NonNull int respId) {
+        this.respId = respId;
+    }
+
     @NonNull
     public int getRespId() {
         return respId;

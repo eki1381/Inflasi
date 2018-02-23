@@ -1,4 +1,4 @@
-package com.eki.ryh.inflasi.Questionnaire;
+package com.eki.ryh.inflasi.InnerMain;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -11,9 +11,9 @@ import com.eki.ryh.inflasi.R;
 import com.github.florent37.awesomebar.AwesomeBar;
 
 //todo create BaseActivity and import to this class
-public class QuestionnaireActivity extends BaseActivity implements QuestionnaireFragment.OnQuestionnaireFragmentInteractionListener {
+public class InnerMainActivity extends BaseActivity implements InnerMainFragment.OnInnerMainFragmentInteractionListener {
 
-    QuestionnaireContract.Presenter mPresenter;
+    InnerMainContract.Presenter mPresenter;
 
     AwesomeBar toolbar;
 
@@ -23,7 +23,7 @@ public class QuestionnaireActivity extends BaseActivity implements Questionnaire
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_questionnaire_layout);
+        setContentView(R.layout.activity_inner_main_layout);
 
         toolbar = findViewById(R.id.bar);
 
@@ -37,16 +37,17 @@ public class QuestionnaireActivity extends BaseActivity implements Questionnaire
             }
         });
 
-        QuestionnaireFragment QuestionnaireFragment = (QuestionnaireFragment) getSupportFragmentManager()
+        InnerMainFragment InnerMainFragment = (InnerMainFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frame_layout_content);
-        if (QuestionnaireFragment == null) {
-            QuestionnaireFragment = QuestionnaireFragment.newInstance();
+        if (InnerMainFragment == null) {
+            InnerMainFragment = InnerMainFragment.newInstance();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.frame_layout_content, QuestionnaireFragment);
+            transaction.add(R.id.frame_layout_content, InnerMainFragment);
             transaction.commit();
         }
-        mPresenter = new QuestionnairePresenter(this, QuestionnaireFragment, Injection.provideBarangRepository(this), Injection.provideMerekRepository(this), Injection.provideRespondenRepository(this), Injection.provideQuestionnaireRepository(this));
-        mPresenter.loadQuestionnaire(getIntent().getExtras().getInt("QUEST_SELECTED"));
+        mPresenter = new InnerMainPresenter(this, InnerMainFragment, Injection.provideQuestionnaireRepository(this));
+
+        mPresenter.loadQuestionnaireList(getIntent().getExtras().getString("BULAN_SELECTED"));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class QuestionnaireActivity extends BaseActivity implements Questionnaire
     }
 
     @Override
-    public void onQuestionnaireFragmentInteraction() {
+    public void onInnerMainFragmentInteraction() {
 
     }
 }

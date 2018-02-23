@@ -33,6 +33,11 @@ public class Merek {
     }
 
     @NonNull
+    public void setMerekId(@NonNull int merekId) {
+        this.merekId = merekId;
+    }
+
+    @NonNull
     public int getMerekId() {
         return merekId;
     }
